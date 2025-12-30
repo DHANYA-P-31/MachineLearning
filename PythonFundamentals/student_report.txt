@@ -1,0 +1,14 @@
+Report for Student ID: S101, Name: Asha
+Total LOGIN activities: 1
+Total SUBMISSION activities: 0
+Abnormalities: No
+Daily Statistics:
+Date: 2025-03-10, LOGIN: 1, LOGOUT: 1, SUBMIT_ASSIGNMENT: 0
+
+Report for Student ID: S102, Name: Ravi
+Total LOGIN activities: 0
+Total SUBMISSION activities: 1
+Abnormalities: No
+Daily Statistics:
+Date: 2025-03-10, LOGIN: 0, LOGOUT: 0, SUBMIT_ASSIGNMENT: 1
+
