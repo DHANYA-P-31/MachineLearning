@@ -12,3 +12,10 @@ Abnormalities: No
 Daily Statistics:
 Date: 2025-03-10, LOGIN: 0, LOGOUT: 0, SUBMIT_ASSIGNMENT: 1
 
+Report for Student ID: S103, Name: Kiruthi
+Total LOGIN activities: 1
+Total SUBMISSION activities: 0
+Abnormalities: No
+Daily Statistics:
+Date: 2025-01-07, LOGIN: 1, LOGOUT: 1, SUBMIT_ASSIGNMENT: 0
+
