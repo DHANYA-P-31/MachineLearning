@@ -2,3 +2,6 @@
 /data/
 /Record/
 CharacterRecognition/mlp_character_recognition_bundle.pkl
+
+# Ignore TOML files
+*.toml
