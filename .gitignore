@@ -1,3 +1,4 @@
 # Ignore datasets and records
 /data/
 /Record/
+CharacterRecognition/mlp_character_recognition_bundle.pkl
