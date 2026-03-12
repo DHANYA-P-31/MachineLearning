@@ -7,11 +7,10 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import mean_squared_error, r2_score
 
 
-st.set_page_config(page_title="Fish Market LWR", page_icon="🐟", layout="wide")
+st.set_page_config(page_title="Fish Market LWR", page_icon="🐟", layout="centered")
 
 
 def locally_weighted_regression(X_design: np.ndarray, y: np.ndarray, tau: float, x_query: np.ndarray) -> float:
-    """Predict a single point with Locally Weighted Regression."""
     diff = X_design - x_query
     sq_dist = np.sum(diff * diff, axis=1)
     w = np.exp(-sq_dist / (2 * tau**2))
@@ -33,7 +32,6 @@ def lwr_predict(X_design: np.ndarray, y: np.ndarray, X_query: np.ndarray, tau: f
 
 @st.cache_data
 def load_data() -> pd.DataFrame:
-    # app.py is in LocallyWeighted/, dataset is in ../data/Fish.csv
     csv_path = Path(__file__).resolve().parent.parent / "data" / "Fish.csv"
     if not csv_path.exists():
         raise FileNotFoundError(f"Could not find dataset at: {csv_path}")
@@ -57,7 +55,7 @@ def build_training_arrays(df: pd.DataFrame):
 
 def main() -> None:
     st.title("Locally Weighted Regression - Fish Market")
-    st.write("Predict **fish weight** from **Length3** using Locally Weighted Regression (LWR).")
+    st.write("Choose a fish length and tau value to predict weight.")
 
     try:
         fish_df = load_data()
@@ -67,13 +65,12 @@ def main() -> None:
 
     X_raw, y, X_scaled, X_design, scaler = build_training_arrays(fish_df)
 
-    st.sidebar.header("Model Controls")
-    tau = st.sidebar.slider("Tau (bandwidth)", min_value=0.05, max_value=2.50, value=0.10, step=0.01)
+    tau = st.slider("Tau (bandwidth)", min_value=0.05, max_value=2.50, value=0.10, step=0.01)
 
     length_min = float(np.min(X_raw))
     length_max = float(np.max(X_raw))
     length_default = float(np.median(X_raw))
-    length3_input = st.sidebar.slider(
+    length3_input = st.slider(
         "Length3 for prediction",
         min_value=length_min,
         max_value=length_max,
@@ -81,7 +78,6 @@ def main() -> None:
         step=0.1,
     )
 
-    # Train/evaluate on full dataset for interactive demo
     y_pred = lwr_predict(X_design, y, X_design, tau)
     mse = mean_squared_error(y, y_pred)
     r2 = r2_score(y, y_pred)
@@ -90,10 +86,7 @@ def main() -> None:
     x_query_design = np.hstack((np.ones((1, 1)), x_query_scaled))[0]
     pred_weight = locally_weighted_regression(X_design, y, tau, x_query_design)
 
-    c1, c2, c3 = st.columns(3)
-    c1.metric("Predicted Weight", f"{pred_weight:.2f}")
-    c2.metric("MSE", f"{mse:.2f}")
-    c3.metric("R²", f"{r2:.4f}")
+    st.metric("Predicted Weight", f"{pred_weight:.2f}")
 
     st.subheader("Prediction Plot")
     sorted_idx = X_scaled[:, 0].argsort()
@@ -113,8 +106,7 @@ def main() -> None:
     ax.legend()
     st.pyplot(fig)
 
-    st.subheader("Dataset Preview")
-    st.dataframe(fish_df.head(10), use_container_width=True)
+    st.caption(f"MSE: {mse:.2f} | R²: {r2:.4f}")
 
 
 if __name__ == "__main__":
