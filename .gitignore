@@ -6,5 +6,9 @@ CharacterRecognition/mlp_character_recognition_bundle.pkl
 # Ignore TOML files
 *.toml
 *.pkl
+*.pcl
 
+# Ignore all Python cache directories
+__pycache__/
 FacialDetectionCamera/captures
+LocallyWeighted/__pycache__/
