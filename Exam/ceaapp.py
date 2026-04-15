@@ -40,6 +40,9 @@ def candidate_elimination(df,label_col="Approval"):
                     G_new.append(g)
             G = G_new
         G = [g for g in G if not any(more_general(g2,g) and g2 != g for g2 in G)]
+        st.write(f"After instance {index+1} ({label}):")
+        st.write("S:", S)
+        st.write("G:", G)
     return df.columns[:-1].tolist(), S, G
 
 def predict(instance,s,g):
